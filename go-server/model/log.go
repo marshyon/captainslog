@@ -1,4 +1,4 @@
-package models
+package model
 
 type Log struct {
 	ID       uint   `json:"id" gorm:"primary_key"`

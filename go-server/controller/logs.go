@@ -1,10 +1,10 @@
-package controllers
+package controller
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/marshyon/captainslog/models"
+	"github.com/marshyon/captainslog/model"
 )
 
 type CreateLogInput struct {
@@ -24,8 +24,8 @@ type UpdateLogInput struct {
 // GET /logs
 // Find all logs
 func FindLogs(c *gin.Context) {
-	var logs []models.Log
-	models.DB.Find(&logs)
+	var logs []model.Log
+	model.DB.Find(&logs)
 
 	c.JSON(http.StatusOK, gin.H{"data": logs})
 }
@@ -34,8 +34,8 @@ func FindLogs(c *gin.Context) {
 // Find a log
 func FindLog(c *gin.Context) {
 	// Get model if exist
-	var log models.Log
-	if err := models.DB.Where("id = ?", c.Param("id")).First(&log).Error; err != nil {
+	var log model.Log
+	if err := model.DB.Where("id = ?", c.Param("id")).First(&log).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
@@ -54,13 +54,13 @@ func CreateLog(c *gin.Context) {
 	}
 
 	// Create log
-	log := models.Log{
+	log := model.Log{
 		Title:    input.Title,
 		Author:   input.Author,
 		Category: input.Category,
 		Content:  input.Content,
 	}
-	models.DB.Create(&log)
+	model.DB.Create(&log)
 
 	c.JSON(http.StatusOK, gin.H{"data": log})
 }
@@ -69,8 +69,8 @@ func CreateLog(c *gin.Context) {
 // Update a log
 func UpdateLog(c *gin.Context) {
 	// Get model if exist
-	var log models.Log
-	if err := models.DB.Where("id = ?", c.Param("id")).First(&log).Error; err != nil {
+	var log model.Log
+	if err := model.DB.Where("id = ?", c.Param("id")).First(&log).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
@@ -82,7 +82,7 @@ func UpdateLog(c *gin.Context) {
 		return
 	}
 
-	models.DB.Model(&log).Updates(input)
+	model.DB.Model(&log).Updates(input)
 
 	c.JSON(http.StatusOK, gin.H{"data": log})
 }
@@ -91,13 +91,13 @@ func UpdateLog(c *gin.Context) {
 // Delete a log
 func DeleteLog(c *gin.Context) {
 	// Get model if exist
-	var log models.Log
-	if err := models.DB.Where("id = ?", c.Param("id")).First(&log).Error; err != nil {
+	var log model.Log
+	if err := model.DB.Where("id = ?", c.Param("id")).First(&log).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
 
-	models.DB.Delete(&log)
+	model.DB.Delete(&log)
 
 	c.JSON(http.StatusOK, gin.H{"data": true})
 }

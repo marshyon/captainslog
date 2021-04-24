@@ -1,14 +1,14 @@
 package main
 
 import (
-	"net/http"
-	"time"
-	"os"
 	"fmt"
+	"net/http"
+	"os"
+	"time"
 
 	"github.com/gin-contrib/cors"
-	"github.com/marshyon/captainslog/controllers"
-	"github.com/marshyon/captainslog/models"
+	"github.com/marshyon/captainslog/controller"
+	model "github.com/marshyon/captainslog/model"
 
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
@@ -27,25 +27,25 @@ func main() {
 	// - Preflight requests cached for 12 hours
 	r.Use(cors.New(cors.Config{
 
-		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
-		AllowHeaders: []string{"Origin", "Content-Length", "Content-Type"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "PATCH"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc:  func(origin string) bool { return true },
-		MaxAge: 12 * time.Hour,
+		MaxAge:           12 * time.Hour,
 	}))
 
 	r.LoadHTMLGlob("templates/*")
 
 	// Connect to database
-	models.ConnectDatabase()
+	model.ConnectDatabase()
 
 	// API Routes
-	r.GET("/logs", controllers.FindLogs)
-	r.GET("/logs/:id", controllers.FindLog)
-	r.POST("/logs", controllers.CreateLog)
-	r.PATCH("/logs/:id", controllers.UpdateLog)
-	r.DELETE("/logs/:id", controllers.DeleteLog)
+	r.GET("/logs", controller.FindLogs)
+	r.GET("/logs/:id", controller.FindLog)
+	r.POST("/logs", controller.CreateLog)
+	r.PATCH("/logs/:id", controller.UpdateLog)
+	r.DELETE("/logs/:id", controller.DeleteLog)
 	// Main Site Routes
 	// r.StaticFile("/index.html", "./html/index.html")
 	r.GET("/", func(c *gin.Context) {
