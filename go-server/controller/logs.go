@@ -7,18 +7,11 @@ import (
 	"github.com/marshyon/captainslog/model"
 )
 
-type CreateLogInput struct {
+type LogInput struct {
 	Title    string `json:"title" binding:"required"`
 	Author   string `json:"author" binding:"required"`
 	Category string `json:"category" binding:"required"`
 	Content  string `json:"content" binding:"required"`
-}
-
-type UpdateLogInput struct {
-	Title    string `json:"title"`
-	Author   string `json:"author"`
-	Category string `json:"category"`
-	Content  string `json:"content"`
 }
 
 // GET /logs
@@ -47,7 +40,7 @@ func FindLog(c *gin.Context) {
 // Create new log
 func CreateLog(c *gin.Context) {
 	// Validate input
-	var input CreateLogInput
+	var input LogInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -76,7 +69,7 @@ func UpdateLog(c *gin.Context) {
 	}
 
 	// Validate input
-	var input UpdateLogInput
+	var input LogInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
