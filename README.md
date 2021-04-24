@@ -11,7 +11,8 @@ The back end is written in Go and uses Gin framework to handle the API and GORM 
 
 | tag   | description |
 | ----- | ----------- |
-| 0.0.1 | this is an initial release |
+| 0.0.1 | initial release |
+| 0.0.2 | minor go code refactor |
 
 My Plan is to extend this simple application to use more features of GORM and Gin pricipally the latter to add CORS, hosting of the React application itself within the Go Gin app, containerisation of the application, use of an external database to enable K8s like environments to become a target, JWT token authentication, possibly SSL encryption via letsencrypt and / or Nginx / Traefic.
 
