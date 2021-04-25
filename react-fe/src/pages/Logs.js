@@ -5,12 +5,14 @@ import NoteCard from '../components/NoteCard'
 import { useHistory } from 'react-router-dom'
 import env from 'react-dotenv'
 
-export default function Logs() {
+export default function Logs({userInfo}) {
   const [logs, setLogs] = useState([]);
   const history = useHistory()
 
 
   useEffect(() => {
+    console.log("user password in logs> ", userInfo.password)
+    console.log("    user name in logs> ", userInfo.user)
     fetch( env.API_URL + "/logs")
       .then(res => res.json())
       .then(data => setLogs(data.data))

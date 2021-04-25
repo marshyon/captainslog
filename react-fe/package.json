@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "date-fns": "^2.17.0",
+    "material-ui-password-field": "^2.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dotenv": "^0.1.3",
