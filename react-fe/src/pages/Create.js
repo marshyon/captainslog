@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Create() {
+export default function Create({userInfo}) {
   const classes = useStyles()
   const history = useHistory()
   const [title, setTitle] = useState('')
@@ -50,6 +50,9 @@ export default function Create() {
       }).then(() => history.push('/'))
     } 
   }
+
+  console.log("user password in create> ", userInfo.password)
+  console.log("    user name in create> ", userInfo.user)
 
   return (
     <Container size="sm">
