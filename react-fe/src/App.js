@@ -2,9 +2,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Logs from './pages/Logs'
 import Create from './pages/Create'
 import Edit from './pages/Edit'
+import Login from './pages/Login'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import { purple } from '@material-ui/core/colors'
 import Layout from './components/Layout'
+// import React, { useEffect } from 'react'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,18 +24,32 @@ const theme = createMuiTheme({
   }
 })
 
+let userInfo = {
+  "user": "",
+  "password": ""
+}
+
+
+// useEffect(() => {
+// })
+
 function App() {
-  return (
+console.log("user password in root component> ", userInfo.password)
+console.log("    user name in root component> ", userInfo.user)
+return (
     <ThemeProvider theme={theme}>
       <Router>
         <Layout>
           <Switch>
             <Route exact path="/">
-              <Logs />
+              <Logs userInfo={userInfo} />
             </Route>
             <Route path="/create">
-              <Create />
+              <Create userInfo={userInfo}/>
             </Route>
+            <Route path="/login">
+              <Login userInfo={userInfo}/>
+            </Route>            
             <Route path="/edit">
               <Edit />
             </Route>
