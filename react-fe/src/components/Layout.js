@@ -12,6 +12,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { format } from 'date-fns'
 import Avatar from '@material-ui/core/Avatar'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const drawerWidth = 240
 
@@ -58,7 +59,7 @@ export default function Layout({ children }) {
 
   const menuItems = [
     { 
-      text: 'My Notes', 
+      text: 'Entries', 
       icon: <SubjectOutlined color="secondary" />, 
       path: '/' 
     },
@@ -67,6 +68,11 @@ export default function Layout({ children }) {
       icon: <AddCircleOutlineOutlined color="secondary" />, 
       path: '/create' 
     },
+    { 
+      text: 'Login', 
+      icon: <AccountCircleIcon color="secondary" />, 
+      path: '/login' 
+    },    
   ];
 
   return (
