@@ -4,6 +4,7 @@ import Masonry from 'react-masonry-css'
 import NoteCard from '../components/NoteCard'
 import { useHistory } from 'react-router-dom'
 import env from 'react-dotenv'
+import base64 from 'react-native-base64'
 
 export default function Logs({userInfo}) {
   const [logs, setLogs] = useState([]);
@@ -11,11 +12,34 @@ export default function Logs({userInfo}) {
 
 
   useEffect(() => {
+
     console.log("user password in logs> ", userInfo.password)
     console.log("    user name in logs> ", userInfo.user)
-    fetch( env.API_URL + "/logs")
-      .then(res => res.json())
-      .then(data => setLogs(data.data))
+    
+    let headers = new Headers()
+    headers.set('Authorization', 'Basic ' + base64.encode(userInfo.user + ":" + userInfo.password))
+
+    fetch( env.API_URL + "/logs", {
+      method: 'GET',
+      headers: headers
+    })
+    .then(res => {
+      if (!res.ok) {
+        // console.log('here comes the res :', res)
+        // console.log('statuText : ', res.statusText)
+        if(res.statusText == 'Unauthorized') {
+          history.push('/login')
+          // throw Error('you need to log in to see this page')
+        } else {
+          throw Error('something has gone wrong, we could not get any data from the back - end service !!!')
+        }
+      }
+      return res.json()
+    })
+    .then(data => setLogs(data.data))
+    .catch(err => {
+      console.log('ERROR >> ', err.message)
+    })
   }, [])
 
   const handleDelete = async (id) => {

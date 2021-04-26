@@ -11,8 +11,10 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
+import { useHistory } from 'react-router-dom'
 
 
+// const history = useHistory()
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +40,7 @@ export default function InputAdornments({userInfo}) {
     password: '',
     showPassword: false,
   });
+  const history = useHistory()
 
   // const handleChange = (prop) => (event) => {
   //   setValues({ ...values, [prop]: event.target.value });
@@ -52,12 +55,14 @@ export default function InputAdornments({userInfo}) {
 
 
   const handleSubmit = (e) => {
+    // 
     e.preventDefault()
     console.log("submit fired")
     console.log("user is : ", user)
     console.log("pass is : ", password)
     userInfo.user = user
     userInfo.password = password
+    history.push('/')
   }
 
 

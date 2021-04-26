@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import { useHistory } from 'react-router-dom'
 import env from 'react-dotenv'
+import base64 from 'react-native-base64'
 
 const useStyles = makeStyles({
   field: {
@@ -43,9 +44,13 @@ export default function Create({userInfo}) {
       setContentError(true)
     }
     if (title && content) {
+
+      let headers = new Headers()
+      headers.set('Authorization', 'Basic ' + base64.encode(userInfo.user + ":" + userInfo.password))  
+
       fetch(env.API_URL + '/logs', {
         method: 'POST',
-        headers: {"Content-type": "application/json"},
+        headers: headers,
         body: JSON.stringify({ title, content, category, author })
       }).then(() => history.push('/'))
     } 

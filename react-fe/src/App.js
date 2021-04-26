@@ -51,7 +51,7 @@ return (
               <Login userInfo={userInfo}/>
             </Route>            
             <Route path="/edit">
-              <Edit />
+              <Edit userInfo={userInfo}/>
             </Route>
           </Switch>
         </Layout>

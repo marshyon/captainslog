@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl'
 import FormLabel from '@material-ui/core/FormLabel'
 import { useHistory } from 'react-router-dom'
 import env from "react-dotenv";
+import base64 from 'react-native-base64'
 
 
 // import EditForm from '../pages/EditForm'
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Edit() {
+export default function Edit({userInfo}) {
   const classes = useStyles()
   const history = useHistory()
   const [id, setID] = useState('')
@@ -43,7 +44,13 @@ export default function Edit() {
     const urlParams = window.location.pathname.split('/')
     const dataURLToFetch = env.API_URL + "/logs/" + urlParams[2]
 
-    fetch(dataURLToFetch)
+    let headers = new Headers()
+    headers.set('Authorization', 'Basic ' + base64.encode(userInfo.user + ":" + userInfo.password))
+
+    fetch(dataURLToFetch, {
+      method: 'GET',
+      headers: headers
+    })
       .then(res => res.json())
       .then(
         (data) => {
@@ -75,11 +82,14 @@ export default function Edit() {
     console.log('>>DEBUG>> handleSubmit :: title is : ', title)
     console.log('>>DEBUG>> handleSubmit :: category is : ', category)
 
+    let headers = new Headers()
+    headers.set('Authorization', 'Basic ' + base64.encode(userInfo.user + ":" + userInfo.password))
+
     if (title && content) {
       const myUrl = env.API_URL + "/logs/" + id
       fetch(myUrl, {
         method: 'PATCH',
-        headers: {"Content-type": "application/json"},
+        headers: headers,
         body: JSON.stringify({ id, title, content, category, author })
       }).then(() => history.push('/'))
     }   
