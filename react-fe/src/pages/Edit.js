@@ -51,7 +51,16 @@ export default function Edit({userInfo}) {
       method: 'GET',
       headers: headers
     })
-      .then(res => res.json())
+      .then(res => {
+        if(!res.ok) {
+          if(res.statusText == 'Unauthorized') {
+            history.push('/login')
+          } else {
+            throw Error('something has gone wrong, we could not get any data from the back - end service !!!')
+          }
+        }
+        return res.json()
+      })
       .then(
         (data) => {
           console.log('title : >> ', data.data.title)
@@ -60,7 +69,9 @@ export default function Edit({userInfo}) {
           setContent(data.data.content)
           setID(urlParams[2])
         }
-      )
+      ).catch(err => {
+        console.log('ERROR >> ', err.message)
+      })
     
   }, [])
 

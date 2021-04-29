@@ -68,10 +68,12 @@ export default function Logs({userInfo}) {
         breakpointCols={breakpoints}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column">
-        {logs.map(note => (
+          {logs.length > 0 && 
+          logs.map(note => (
           <div key={note.id}>
             <NoteCard note={note} handleDelete={handleDelete} handleEdit={handleEdit} />
           </div>
+          
         ))}
       </Masonry>
     </Container>

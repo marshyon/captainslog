@@ -81,7 +81,7 @@ export default function InputAdornments({userInfo}) {
           id="outlined-start-adornment"
           className={clsx(classes.margin, classes.textField)}
           InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
+            startAdornment: <InputAdornment position="start"><div></div></InputAdornment>,
           }}
           variant="outlined"
         />
