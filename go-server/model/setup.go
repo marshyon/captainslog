@@ -25,10 +25,10 @@ func ConnectDatabase() {
 	dbTable := os.Getenv("DB_TABLE")
 	dbPort := os.Getenv("DB_PORT")
 
-	// dbConnectionString := dbUsername + ":" + dbPassword + "@tcp(" + dbHost + ":" + strconv.Itoa(dbPort) + ")/" + dbTable
 	connectionString := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", dbHost, dbPort, dbUsername, dbTable, dbPassword)
 	fmt.Println(connectionString)
-	database, err := gorm.Open("sqlite3", "test.db")
+
+	database, err := gorm.Open("sqlite3", connectionString)
 
 	if err != nil {
 		panic("Failed to connect to database!")
