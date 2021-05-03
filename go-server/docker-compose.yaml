@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:12.2-alpine
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - backend
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+  api:
+    build: .
+    container_name: "api"
+    environment:
+      - API_URL=${API_URL}
+      - API_PASSWORD=${API_PASSWORD}
+      - API_USER=${API_USER}
+      - DB_HOST=db 
+      - DB_PORT=${DB_PORT} 
+      - DB_USERNAME=${DB_USERNAME} 
+      - DB_PASSWORD=${DB_PASSWORD} 
+      - DB_TABLE=${DB_TABLE}
+    ports:
+      - "8080:8080"
+    depends_on: 
+        - db
+    networks:
+      - backend
+volumes:
+  database_postgres:
+networks:
+  backend:
+    driver: bridge

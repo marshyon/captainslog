@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"net/http"
 	"os"
@@ -10,7 +9,6 @@ import (
 	"time"
 
 	"github.com/gin-contrib/cors"
-	"github.com/joho/godotenv"
 	"github.com/marshyon/captainslog/controller"
 	"github.com/marshyon/captainslog/middleware"
 	model "github.com/marshyon/captainslog/model"
@@ -49,11 +47,6 @@ func generateUserPassword() (user, password string) {
 }
 
 func main() {
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 
 	// setupLogOutput()
 
